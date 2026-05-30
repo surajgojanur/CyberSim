@@ -5,6 +5,7 @@ const defaultStaticDir = fileURLToPath(new URL("../../client/dist", import.meta.
 
 export const config = {
   nodeEnv: process.env.NODE_ENV || "development",
+  serverHost: process.env.SERVER_HOST || "0.0.0.0",
   port: parsePort(process.env.PORT || "4000"),
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
   databasePath: process.env.DATABASE_PATH || defaultDatabasePath,
@@ -17,6 +18,10 @@ export const config = {
 
 export function validateConfig(nextConfig = config) {
   const errors = [];
+
+  if (!nextConfig.serverHost) {
+    errors.push("SERVER_HOST is required");
+  }
 
   if (!Number.isInteger(nextConfig.port) || nextConfig.port < 1 || nextConfig.port > 65_535) {
     errors.push("PORT must be an integer between 1 and 65535");
@@ -65,6 +70,10 @@ export function validateConfig(nextConfig = config) {
   }
 
   return nextConfig;
+}
+
+export function getCorsOrigin(nextConfig = config) {
+  return nextConfig.nodeEnv === "development" ? true : nextConfig.clientOrigin;
 }
 
 function parsePort(value) {

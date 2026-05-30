@@ -91,6 +91,44 @@ Seeded local admin:
 - Username: `admin`
 - Password: `admin123`
 
+## LAN Testing
+
+The Vite development server binds to all interfaces and proxies both `/api` and
+`/socket.io` to the local backend. The backend also binds to all interfaces in
+development. This lets another device use the host machine's LAN IP without
+trying to connect to `localhost` on the participant device.
+
+1. Find the host machine's LAN IP:
+
+```bash
+# Linux
+hostname -I
+
+# macOS
+ipconfig getifaddr en0
+
+# Windows PowerShell
+ipconfig
+```
+
+2. Start both services:
+
+```bash
+npm run dev
+```
+
+3. From another device on the same network, open:
+
+```text
+http://<HOST_LAN_IP>:5173
+```
+
+For example: `http://192.168.1.25:5173`
+
+If the page does not load, allow inbound TCP access to ports `5173` and `4000`
+in the host firewall. Some guest Wi-Fi networks block communication between
+devices even when both devices are connected to the same access point.
+
 ## Demo Reset
 
 Reset the local SQLite database and reseed the admin user plus starter questions:
@@ -143,7 +181,7 @@ SEED_ADMIN_PASSWORD=replace-demo-password \
 npm start
 ```
 
-Split deployment is also supported. Deploy `client/` as a static Vite app, deploy `server/` as the API/Socket.IO service, set `VITE_API_URL` for the frontend build, and set `CLIENT_ORIGIN` on the backend.
+Split deployment is also supported. Deploy `client/` as a static Vite app, deploy `server/` as the API/Socket.IO service, set `VITE_API_URL` and optionally `VITE_SOCKET_URL` for the frontend build, and set `CLIENT_ORIGIN` on the backend. The backend binds to `SERVER_HOST=0.0.0.0` by default; override it only when the deployment platform requires a different interface.
 
 ## Screenshots / Demo
 

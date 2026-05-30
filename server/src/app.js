@@ -5,10 +5,10 @@ import { authRouter } from "./auth.js";
 import { questionSetsRouter } from "./questionSets.js";
 import { sessionsRouter } from "./sessions.js";
 
-export function createApp({ clientOrigin, serveClient = false, staticDir = "" }) {
+export function createApp({ corsOrigin, serveClient = false, staticDir = "" }) {
   const app = express();
 
-  app.use(cors({ origin: clientOrigin }));
+  app.use(cors({ origin: corsOrigin }));
   app.use(express.json());
 
   app.get("/api/health", (_req, res) => {

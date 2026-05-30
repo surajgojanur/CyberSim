@@ -1,9 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateConfig } from "../src/config.js";
+import { getCorsOrigin, validateConfig } from "../src/config.js";
 
 const validConfig = {
   nodeEnv: "development",
+  serverHost: "0.0.0.0",
   port: 4000,
   clientOrigin: "http://localhost:5173",
   databasePath: ":memory:",
@@ -22,6 +23,21 @@ test("config validation rejects invalid ports", () => {
   assert.throws(
     () => validateConfig({ ...validConfig, port: NaN }),
     /PORT must be an integer/
+  );
+});
+
+test("development CORS allows LAN browser origins", () => {
+  assert.equal(getCorsOrigin(validConfig), true);
+});
+
+test("production CORS remains restricted to the configured origin", () => {
+  assert.equal(
+    getCorsOrigin({
+      ...validConfig,
+      nodeEnv: "production",
+      clientOrigin: "https://cybersim.example"
+    }),
+    "https://cybersim.example"
   );
 });
 

@@ -4,9 +4,11 @@ import { generateJoinCode, isValidJoinCode, normalizeJoinCode } from "./joinCode
 import { listParticipants } from "./participants.js";
 import { requireAdmin } from "./auth.js";
 import { getFinalResults } from "./results.js";
+import { canUseQuestionSet } from "./questionSets.js";
 
 const createSessionSchema = z.object({
-  title: z.string().trim().min(3, "Session title must be at least 3 characters").max(120)
+  title: z.string().trim().min(3, "Session title must be at least 3 characters").max(120),
+  questionSetId: z.number().int().positive().optional().nullable()
 });
 
 export function sessionsRouter(app) {
@@ -16,14 +18,24 @@ export function sessionsRouter(app) {
       return res.status(400).json({ error: parsed.error.issues[0].message });
     }
 
-    const session = createSession(getDb(), req.admin.id, parsed.data.title);
+    if (!canUseQuestionSet(getDb(), parsed.data.questionSetId, req.admin.id)) {
+      return res.status(400).json({ error: "Select a valid question set with at least one question" });
+    }
+
+    const session = createSession(
+      getDb(),
+      req.admin.id,
+      parsed.data.title,
+      parsed.data.questionSetId || null
+    );
     res.status(201).json({ session });
   });
 
   app.get("/api/sessions/:id", requireAdmin, (req, res) => {
     const session = getDb()
       .prepare(
-        `SELECT id, title, join_code AS joinCode, state, created_at AS createdAt
+        `SELECT id, title, join_code AS joinCode, state, question_set_id AS questionSetId,
+                created_at AS createdAt
          FROM sessions
          WHERE id = ? AND admin_id = ?`
       )
@@ -67,18 +79,21 @@ export function sessionsRouter(app) {
   });
 }
 
-export function createSession(database, adminId, title) {
+export function createSession(database, adminId, title, questionSetId = null) {
   for (let attempt = 0; attempt < 10; attempt += 1) {
     const joinCode = generateJoinCode();
 
     try {
       const result = database
-        .prepare("INSERT INTO sessions (admin_id, title, join_code) VALUES (?, ?, ?)")
-        .run(adminId, title, joinCode);
+        .prepare(
+          "INSERT INTO sessions (admin_id, question_set_id, title, join_code) VALUES (?, ?, ?, ?)"
+        )
+        .run(adminId, questionSetId, title, joinCode);
       return {
         id: result.lastInsertRowid,
         title,
         joinCode,
+        questionSetId,
         state: "lobby"
       };
     } catch (error) {
@@ -94,7 +109,8 @@ export function createSession(database, adminId, title) {
 export function getSessionByJoinCode(database, joinCode) {
   return database
     .prepare(
-      `SELECT id, title, join_code AS joinCode, state, created_at AS createdAt
+      `SELECT id, title, join_code AS joinCode, state, question_set_id AS questionSetId,
+              created_at AS createdAt
        FROM sessions
        WHERE join_code = ?`
     )

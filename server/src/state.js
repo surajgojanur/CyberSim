@@ -86,7 +86,8 @@ export function getParticipantState(database, participantId) {
 export function getAdminState(database, sessionId) {
   const session = database
     .prepare(
-      `SELECT id, title, join_code AS joinCode, state, created_at AS createdAt
+      `SELECT id, title, join_code AS joinCode, state, question_set_id AS questionSetId,
+              created_at AS createdAt
        FROM sessions
        WHERE id = ?`
     )

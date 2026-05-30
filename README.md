@@ -22,10 +22,12 @@ The MVP is built to preserve training integrity: no correct answer, explanation,
 ## Key Features
 
 - Admin login, session creation, and live lobby
+- Admin-managed reusable question sets with custom scenarios
 - Participant join flow with 6-character session codes
 - Real-time Socket.IO rounds with a server-authoritative timer
 - Private one-answer-per-round submissions
-- Lock and reveal phases with correctness-first scoring
+- Lock and reveal phases with correctness-first scoring and early reveal after all active participants answer
+- Live admin participant presence for connected, disconnected, and left-session states
 - Leaderboard snapshots only after reveal
 - Final results page backed by persisted SQLite data
 - Reconnect/rejoin recovery using participant tokens
@@ -43,13 +45,14 @@ The MVP is built to preserve training integrity: no correct answer, explanation,
 ## Product Flow
 
 1. Admin logs in and creates a session.
-2. Participants join with the displayed code and a display name.
-3. Admin starts a round.
-4. Participants answer a cybersecurity scenario under the timer.
-5. Server locks the round when time expires or the admin force-locks.
-6. Server reveals the correct answer, explanation, score deltas, and leaderboard snapshot.
-7. Admin starts the next round or ends the session.
-8. Admin and participants view final results.
+2. Admin selects a saved question set, or creates a reusable custom set from the session setup page.
+3. Participants join with the displayed code and a display name.
+4. Admin starts a round.
+5. Participants answer a cybersecurity scenario under the timer.
+6. Server locks the round when time expires, the admin force-locks, or the admin reveals early after all active participants answer.
+7. Server reveals the correct answer, explanation, score deltas, and leaderboard snapshot.
+8. Admin starts the next round or ends the session.
+9. Admin and participants view final results.
 
 ## Architecture Overview
 
@@ -57,7 +60,7 @@ The MVP is built to preserve training integrity: no correct answer, explanation,
 - **Zustand store:** keeps client identity and the current server-supplied session state.
 - **Express API:** handles auth, session creation, join-code validation, health, and final results.
 - **Socket.IO server:** owns live lobby, round lifecycle, answer submission, reconnect, takeover, and session end events.
-- **SQLite + Better-SQLite3:** persists sessions, participants, questions, rounds, answers, scores, and final results.
+- **SQLite + Better-SQLite3:** persists sessions, participants, reusable question sets, questions, rounds, answers, scores, and final results.
 - **Recovery layer:** restores future timers and resolves expired/locked rounds on server boot for single-process demo reliability.
 
 See [ARCHITECTURE.md](./ARCHITECTURE.md) for the engineering summary.
@@ -163,13 +166,13 @@ See [DEMO.md](./DEMO.md) for a 2-3 minute live demo script.
 - No CSV export
 - No cross-session reporting
 - No prior-session archive browsing
-- No question authoring UI
+- No question set import/export
 - Timer recovery is single-process only, not distributed
 
 ## Future Improvements
 
 - Saved session summaries and replayable result views
-- Question authoring and scenario packs
+- Bulk question import/export
 - Team mode and role-based incident scenarios
 - Deployment templates for common hosting providers
 - Browser-based end-to-end test for the full live flow

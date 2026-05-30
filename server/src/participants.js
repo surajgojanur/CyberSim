@@ -4,11 +4,17 @@ export function listParticipants(database, sessionId) {
   return database
     .prepare(
       `SELECT id, display_name AS displayName, connected, created_at AS createdAt, last_seen_at AS lastSeenAt
+              , left_at AS leftAt
        FROM participants
        WHERE session_id = ?
        ORDER BY created_at ASC, id ASC`
     )
-    .all(sessionId);
+    .all(sessionId)
+    .map((participant) => ({
+      ...participant,
+      connected: participant.connected === 1,
+      status: participant.leftAt ? "left" : participant.connected === 1 ? "connected" : "disconnected"
+    }));
 }
 
 export function createParticipant(database, sessionId, displayName) {
@@ -44,7 +50,7 @@ export function getParticipantByToken(database, socketToken) {
     .prepare(
       `SELECT id, session_id AS sessionId, display_name AS displayName, reconnect_token AS reconnectToken
        FROM participants
-       WHERE reconnect_token = ?`
+       WHERE reconnect_token = ? AND left_at IS NULL`
     )
     .get(socketToken);
 }
@@ -57,4 +63,14 @@ export function setParticipantConnected(database, participantId, connected) {
        WHERE id = ?`
     )
     .run(connected ? 1 : 0, participantId);
+}
+
+export function setParticipantLeft(database, participantId) {
+  database
+    .prepare(
+      `UPDATE participants
+       SET connected = 0, left_at = CURRENT_TIMESTAMP, last_seen_at = CURRENT_TIMESTAMP
+       WHERE id = ?`
+    )
+    .run(participantId);
 }

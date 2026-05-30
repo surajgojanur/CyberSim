@@ -4,7 +4,7 @@ const DEFAULT_ROUND_DURATION_MS = 45_000;
 
 export function startRound(database, sessionId, durationMs = DEFAULT_ROUND_DURATION_MS, nowMs = Date.now()) {
   const session = database
-    .prepare("SELECT id, state FROM sessions WHERE id = ?")
+    .prepare("SELECT id, state, question_set_id AS questionSetId FROM sessions WHERE id = ?")
     .get(sessionId);
 
   if (!session) {
@@ -18,17 +18,24 @@ export function startRound(database, sessionId, durationMs = DEFAULT_ROUND_DURAT
     return { round: null, error: "A round is already active" };
   }
 
+  const questionSetId = getSessionQuestionSetId(database, session);
+  if (!questionSetId) {
+    return { round: null, error: "No question set is available" };
+  }
+
   const question = database
     .prepare(
       `SELECT q.id, q.title, q.scenario
        FROM questions q
+       JOIN question_set_questions qsq ON qsq.question_id = q.id
        WHERE q.id NOT IN (
          SELECT question_id FROM rounds WHERE session_id = ?
        )
-       ORDER BY q.id ASC
+       AND qsq.question_set_id = ?
+       ORDER BY qsq.display_order ASC, q.id ASC
        LIMIT 1`
     )
-    .get(sessionId);
+    .get(sessionId, questionSetId);
 
   if (!question) {
     return { round: null, error: "No unused questions are available" };
@@ -161,7 +168,7 @@ export function submitAnswer(database, { participantId, socketToken, roundId, an
     .prepare(
       `SELECT id, session_id AS sessionId
        FROM participants
-       WHERE id = ? AND reconnect_token = ?`
+       WHERE id = ? AND reconnect_token = ? AND left_at IS NULL`
     )
     .get(participantId, socketToken);
 
@@ -238,15 +245,41 @@ export function submitAnswer(database, { participantId, socketToken, roundId, an
 }
 
 export function getAnswerProgress(database, roundId) {
-  return database
+  const progress = database
     .prepare(
       `SELECT
-         (SELECT COUNT(*) FROM answers WHERE round_id = ?) AS answered,
-         (SELECT COUNT(*) FROM participants p
+         (SELECT COUNT(*)
+          FROM participants p
           JOIN rounds r ON r.session_id = p.session_id
-          WHERE r.id = ?) AS total`
+          JOIN answers a ON a.participant_id = p.id AND a.round_id = r.id
+          WHERE r.id = ?
+          AND p.left_at IS NULL
+          AND (
+            p.connected = 1
+            OR EXISTS (
+              SELECT 1 FROM answers existing
+              WHERE existing.round_id = r.id AND existing.participant_id = p.id
+            )
+          )) AS answered,
+         (SELECT COUNT(*)
+          FROM participants p
+          JOIN rounds r ON r.session_id = p.session_id
+          WHERE r.id = ?
+          AND p.left_at IS NULL
+          AND (
+            p.connected = 1
+            OR EXISTS (
+              SELECT 1 FROM answers existing
+              WHERE existing.round_id = r.id AND existing.participant_id = p.id
+            )
+          )) AS total`
     )
     .get(roundId, roundId);
+
+  return {
+    ...progress,
+    allAnswered: progress.total > 0 && progress.answered >= progress.total
+  };
 }
 
 export function getRoundPayload(database, roundId) {
@@ -418,4 +451,19 @@ export function getActiveRoundForSession(database, sessionId) {
     .get(sessionId);
 
   return round ? getRoundPayload(database, round.id) : null;
+}
+
+export function isRoundReadyToLock(database, roundId) {
+  const progress = getAnswerProgress(database, roundId);
+  return progress.allAnswered;
+}
+
+export function getSessionQuestionSetId(database, session) {
+  if (session?.questionSetId) {
+    return session.questionSetId;
+  }
+
+  return database
+    .prepare("SELECT id FROM question_sets WHERE is_default = 1 ORDER BY id ASC LIMIT 1")
+    .get()?.id;
 }

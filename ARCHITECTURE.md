@@ -6,9 +6,9 @@ CyberSim is a real-time training MVP built around a server-authoritative session
 
 - **React client:** renders admin, participant, reveal, and final results views.
 - **Zustand store:** stores identity tokens and the latest server-supplied state.
-- **Express API:** handles admin auth, session creation, join-code validation, health checks, and final results retrieval.
+- **Express API:** handles admin auth, session creation, question-set management, join-code validation, health checks, and final results retrieval.
 - **Socket.IO server:** handles live lobby updates, round lifecycle events, answer submission, reconnect, tab takeover, and session ending.
-- **SQLite database:** persists admins, sessions, participants, questions, answer options, rounds, answers, and scores.
+- **SQLite database:** persists admins, sessions, participants, reusable question sets, questions, answer options, rounds, answers, and scores.
 
 ## Authority Model
 
@@ -21,6 +21,8 @@ The backend is the source of truth for:
 - Lock and reveal transitions
 - Correctness and score computation
 - Leaderboard and final results ordering
+- Saved question sets and selected session question order
+- Participant presence state
 
 Clients render state and submit intent. They do not calculate phase, score, correctness, or rankings.
 
@@ -38,7 +40,9 @@ Round states:
 question -> locked -> reveal
 ```
 
-The admin can start a round from `lobby` or `reveal`. Rounds lock either when the server timer expires or when the admin force-locks. Reveal happens after lock and scoring.
+The admin can start a round from `lobby` or `reveal`. Rounds lock when the server timer expires, when the admin force-locks, or when the admin uses early reveal after all eligible participants have answered. Reveal happens after lock and scoring.
+
+For early reveal, eligibility is server-side: participants who have explicitly left are excluded, and otherwise the active count includes connected participants plus any participant who already submitted for that round. This lets a disconnected, unanswered participant stop blocking early reveal while keeping an already submitted answer in the round.
 
 ## Answer Privacy
 

@@ -1,0 +1,1039 @@
+{
+  "trainingSet": "CyberSim Premium Awareness Drill",
+  "platform": "CyberSim",
+  "description": "Enterprise-grade timed scenarios covering phishing, social engineering, authentication, malware, AI threats, corporate incidents, mobile scams, and live response decisions.",
+  "format": "live multiplayer timed cyber drill",
+  "difficultyDistribution": {
+    "beginner": "30%",
+    "intermediate": "40%",
+    "advanced": "30%"
+  },
+  "sections": [
+    {
+      "section": "Phishing & Email Attacks",
+      "description": "Realistic phishing, credential theft, malicious attachment, invoice fraud, fake HR, fake college, and QR phishing scenarios that force players to inspect sender domains, urgency language, spelling tricks, links, and attachments.",
+      "difficultyLevel": "Beginner to Advanced",
+      "targetAudience": "Students, interns, employees, finance teams, HR teams, and security champions",
+      "questions": [
+        {
+          "title": "The Salary Revision Mail",
+          "scenario": "At 9:12 AM, an email titled 'CONFIDENTIAL: Salary Revision FY26' says HR updated your compensation. The sender shows HR Team, but the address is hr-payroll@northbridge-careers.com while your company uses northbridge.com. It asks you to open Salary_Adjustment.xlsm before 11 AM or your revision will be delayed.",
+          "options": [
+            "Open the file quickly because salary updates are time-sensitive",
+            "Forward it to colleagues to check if they received it too",
+            "Report it using the phishing button and do not open the attachment",
+            "Reply asking HR to confirm whether it is legitimate"
+          ],
+          "correctAnswer": "Report it using the phishing button and do not open the attachment",
+          "explanation": "The lookalike domain, urgency, confidential salary lure, and macro-enabled attachment are strong phishing indicators. Opening the file could execute malware. Forwarding spreads the lure. Replying confirms engagement to the attacker.",
+          "wrongOptionAnalysis": {
+            "Open the file quickly because salary updates are time-sensitive": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not open or reply. Report the email through the approved phishing channel.",
+            "Forward it to colleagues to check if they received it too": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not open or reply. Report the email through the approved phishing channel.",
+            "Reply asking HR to confirm whether it is legitimate": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not open or reply. Report the email through the approved phishing channel."
+          },
+          "difficulty": 3,
+          "category": "Phishing & Email Attacks",
+          "lesson": "Inspect sender domains, urgency language, and dangerous attachment types.",
+          "recommendedBehavior": "Do not open or reply. Report the email through the approved phishing channel."
+        },
+        {
+          "title": "The Password Reset That Arrived Too Fast",
+          "scenario": "Forty seconds after logging into Teams, you receive a Microsoft 365 email saying 'Unusual signin detected. Reset immediately.' The button points to https://microsoft-security-login.com/reset. The branding looks nearly identical to Microsoft.",
+          "options": [
+            "Click the link because it mentions unusual sign-in activity",
+            "Manually go to the official Microsoft 365 or company SSO portal",
+            "Forward the email to your personal Gmail and inspect it later",
+            "Enter your old password first and then change it"
+          ],
+          "correctAnswer": "Manually go to the official Microsoft 365 or company SSO portal",
+          "explanation": "The domain is not an official Microsoft login domain. Attackers often use security warnings to create urgency. Entering credentials on the fake page gives them direct account access.",
+          "wrongOptionAnalysis": {
+            "Click the link because it mentions unusual sign-in activity": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid email login links. Navigate manually through trusted bookmarks or the official SSO portal.",
+            "Forward the email to your personal Gmail and inspect it later": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid email login links. Navigate manually through trusted bookmarks or the official SSO portal.",
+            "Enter your old password first and then change it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid email login links. Navigate manually through trusted bookmarks or the official SSO portal."
+          },
+          "difficulty": 4,
+          "category": "Phishing & Email Attacks",
+          "lesson": "Recognize credential phishing even when branding looks polished.",
+          "recommendedBehavior": "Avoid email login links. Navigate manually through trusted bookmarks or the official SSO portal."
+        },
+        {
+          "title": "The Internship Offer",
+          "scenario": "A student receives an internship offer from careers@globaltech-internships.co. The sender asks for a resume, passport scan, bank details, and a refundable onboarding fee. The real company uses globaltech.com.",
+          "options": [
+            "Send only the resume and ignore the bank details",
+            "Pay the small fee because internships often need verification",
+            "Verify the opportunity through the official company careers page",
+            "Share the offer in the college WhatsApp group"
+          ],
+          "correctAnswer": "Verify the opportunity through the official company careers page",
+          "explanation": "The domain mismatch, identity-document request, bank-detail request, and refundable fee are classic recruitment scam signs. Even a resume can help identity theft. Sharing spreads the scam.",
+          "wrongOptionAnalysis": {
+            "Send only the resume and ignore the bank details": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify offers through official career pages or known recruiter contacts before sending personal data.",
+            "Pay the small fee because internships often need verification": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify offers through official career pages or known recruiter contacts before sending personal data.",
+            "Share the offer in the college WhatsApp group": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify offers through official career pages or known recruiter contacts before sending personal data."
+          },
+          "difficulty": 2,
+          "category": "Phishing & Email Attacks",
+          "lesson": "Identify student-targeted recruitment scams.",
+          "recommendedBehavior": "Verify offers through official career pages or known recruiter contacts before sending personal data."
+        },
+        {
+          "title": "The QR Code at Reception",
+          "scenario": "A poster near the cafeteria says 'New WiFi Access - Scan QR to re-authenticate before 5 PM.' The QR opens a Google-looking login page for your corporate account. Facilities says they did not place the poster.",
+          "options": [
+            "Scan and log in because WiFi notices are normal",
+            "Use mobile data and report the poster to security or facilities",
+            "Take a photo and post it in the office chat",
+            "Enter only your email to see the next screen"
+          ],
+          "correctAnswer": "Use mobile data and report the poster to security or facilities",
+          "explanation": "QR phishing hides the destination URL and can collect credentials. Posting the QR may cause others to scan it. Even entering only an email helps attackers target employees.",
+          "wrongOptionAnalysis": {
+            "Scan and log in because WiFi notices are normal": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not scan or authenticate. Report unauthorized physical notices.",
+            "Take a photo and post it in the office chat": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not scan or authenticate. Report unauthorized physical notices.",
+            "Enter only your email to see the next screen": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not scan or authenticate. Report unauthorized physical notices."
+          },
+          "difficulty": 5,
+          "category": "Phishing & Email Attacks",
+          "lesson": "Treat QR codes as links that require verification.",
+          "recommendedBehavior": "Do not scan or authenticate. Report unauthorized physical notices."
+        },
+        {
+          "title": "The Invoice Thread Hijack",
+          "scenario": "You are in a real vendor email thread. Suddenly, the vendor asks you to pay the current invoice to a new bank account due to 'RBI audit migration.' The email is accounts@vendarpay.com instead of accounts@vendorpay.com.",
+          "options": [
+            "Process the payment because it is inside an existing thread",
+            "Call the vendor using a previously verified phone number",
+            "Reply asking them to resend the invoice on letterhead",
+            "Ask your manager to approve the payment faster"
+          ],
+          "correctAnswer": "Call the vendor using a previously verified phone number",
+          "explanation": "Business email compromise often abuses real threads and lookalike domains. Letterheads can be forged, and replying keeps you inside the attacker's channel.",
+          "wrongOptionAnalysis": {
+            "Process the payment because it is inside an existing thread": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify bank-account changes out of band through a trusted vendor contact.",
+            "Reply asking them to resend the invoice on letterhead": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify bank-account changes out of band through a trusted vendor contact.",
+            "Ask your manager to approve the payment faster": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify bank-account changes out of band through a trusted vendor contact."
+          },
+          "difficulty": 7,
+          "category": "Phishing & Email Attacks",
+          "lesson": "Detect vendor payment fraud and thread hijacking.",
+          "recommendedBehavior": "Verify bank-account changes out of band through a trusted vendor contact."
+        }
+      ]
+    },
+    {
+      "section": "Social Engineering Scenarios",
+      "description": "Human manipulation drills involving fake IT support, impersonation, shoulder surfing risk, tailgating, fake manager OTP requests, Discord or Telegram pressure, and recruiter scams.",
+      "difficultyLevel": "Beginner to Intermediate",
+      "targetAudience": "College teams, hackathon participants, employees, helpdesk teams, and managers",
+      "questions": [
+        {
+          "title": "The IT Support Call",
+          "scenario": "During a company town hall, someone claiming to be IT calls and says your laptop is causing network instability. They ask you to install AnyDesk so they can fix it before leadership notices.",
+          "options": [
+            "Install AnyDesk because network issues are urgent",
+            "Ask for their employee ID and then comply",
+            "End the call and contact IT through the official helpdesk channel",
+            "Give them your screen-sharing code but not your password"
+          ],
+          "correctAnswer": "End the call and contact IT through the official helpdesk channel",
+          "explanation": "Unexpected remote access requests are high-risk. Employee IDs can be invented. Screen-sharing can expose active sessions, documents, and internal systems.",
+          "wrongOptionAnalysis": {
+            "Install AnyDesk because network issues are urgent": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Refuse unsolicited remote access and verify through the official helpdesk.",
+            "Ask for their employee ID and then comply": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Refuse unsolicited remote access and verify through the official helpdesk.",
+            "Give them your screen-sharing code but not your password": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Refuse unsolicited remote access and verify through the official helpdesk."
+          },
+          "difficulty": 4,
+          "category": "Social Engineering Scenarios",
+          "lesson": "Recognize vishing and remote-access social engineering.",
+          "recommendedBehavior": "Refuse unsolicited remote access and verify through the official helpdesk."
+        },
+        {
+          "title": "The Manager Wants the OTP",
+          "scenario": "Your manager messages on WhatsApp: 'In a client call. Need the OTP sent to your phone for urgent vendor login. Send fast.' The profile photo and name match, but the tone feels unusual.",
+          "options": [
+            "Send the OTP because it is your manager",
+            "Call your manager on an official number or verify on Teams",
+            "Ask what the OTP is for and send it if the answer sounds right",
+            "Forward the OTP to the team group for visibility"
+          ],
+          "correctAnswer": "Call your manager on an official number or verify on Teams",
+          "explanation": "No legitimate workflow needs your OTP. Attackers can clone or compromise messaging accounts and provide convincing context.",
+          "wrongOptionAnalysis": {
+            "Send the OTP because it is your manager": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share OTPs. Verify urgent requests through a trusted channel.",
+            "Ask what the OTP is for and send it if the answer sounds right": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share OTPs. Verify urgent requests through a trusted channel.",
+            "Forward the OTP to the team group for visibility": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share OTPs. Verify urgent requests through a trusted channel."
+          },
+          "difficulty": 3,
+          "category": "Social Engineering Scenarios",
+          "lesson": "Understand OTP theft through authority pressure.",
+          "recommendedBehavior": "Never share OTPs. Verify urgent requests through a trusted channel."
+        },
+        {
+          "title": "The Helpful Stranger at the Door",
+          "scenario": "A person carrying coffee trays follows you into the office lobby and says, 'My access card is inside; can you hold the door?' They wear a vendor hoodie, but you do not recognize them.",
+          "options": [
+            "Hold the door because it would be rude not to",
+            "Let them in if they know a manager's name",
+            "Politely direct them to reception or security",
+            "Ask them to promise they work here"
+          ],
+          "correctAnswer": "Politely direct them to reception or security",
+          "explanation": "Tailgating exploits politeness and helpfulness. Names and logos are easy to learn or copy. Verbal assurance is not access control.",
+          "wrongOptionAnalysis": {
+            "Hold the door because it would be rude not to": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Require every unknown person to check in through reception or security.",
+            "Let them in if they know a manager's name": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Require every unknown person to check in through reception or security.",
+            "Ask them to promise they work here": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Require every unknown person to check in through reception or security."
+          },
+          "difficulty": 2,
+          "category": "Social Engineering Scenarios",
+          "lesson": "Recognize physical social engineering.",
+          "recommendedBehavior": "Require every unknown person to check in through reception or security."
+        },
+        {
+          "title": "The Discord Admin Extension",
+          "scenario": "In a hackathon Discord, someone named 'CyberSim Admin' privately messages finalists. They say your team must install a browser extension to validate submissions before the leaderboard freezes.",
+          "options": [
+            "Install it because it is from an admin",
+            "Ask publicly in the official announcements channel whether it is legitimate",
+            "Install it in incognito mode only",
+            "Send it to one teammate to test first"
+          ],
+          "correctAnswer": "Ask publicly in the official announcements channel whether it is legitimate",
+          "explanation": "Display names are easy to spoof, and private messages create pressure. Incognito mode does not make extensions safe. Testing on a teammate only shifts the risk.",
+          "wrongOptionAnalysis": {
+            "Install it because it is from an admin": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Confirm tool installs through official public event channels.",
+            "Install it in incognito mode only": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Confirm tool installs through official public event channels.",
+            "Send it to one teammate to test first": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Confirm tool installs through official public event channels."
+          },
+          "difficulty": 5,
+          "category": "Social Engineering Scenarios",
+          "lesson": "Validate community-platform instructions.",
+          "recommendedBehavior": "Confirm tool installs through official public event channels."
+        },
+        {
+          "title": "The LinkedIn Recruiter File",
+          "scenario": "A recruiter on LinkedIn offers a senior role and sends Job_Description.pdf.exe through a cloud link. They say the hiring panel closes in 20 minutes.",
+          "options": [
+            "Download it because LinkedIn recruiter outreach is normal",
+            "Open it on your phone instead of work laptop",
+            "Do not download it; verify the role through the company's official website",
+            "Rename the file to .pdf and open it"
+          ],
+          "correctAnswer": "Do not download it; verify the role through the company's official website",
+          "explanation": "The double extension, external cloud link, and time pressure indicate malware delivery. Renaming does not make an executable safe.",
+          "wrongOptionAnalysis": {
+            "Download it because LinkedIn recruiter outreach is normal": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify opportunities on official domains and avoid unexpected executable downloads.",
+            "Open it on your phone instead of work laptop": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify opportunities on official domains and avoid unexpected executable downloads.",
+            "Rename the file to .pdf and open it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify opportunities on official domains and avoid unexpected executable downloads."
+          },
+          "difficulty": 6,
+          "category": "Social Engineering Scenarios",
+          "lesson": "Spot malware delivery through recruiter impersonation.",
+          "recommendedBehavior": "Verify opportunities on official domains and avoid unexpected executable downloads."
+        }
+      ]
+    },
+    {
+      "section": "Password & Authentication Security",
+      "description": "Modern authentication failures including password reuse, MFA fatigue, OTP sharing, public WiFi login traps, credential stuffing, session token sharing, and password manager recovery scams.",
+      "difficultyLevel": "Beginner to Advanced",
+      "targetAudience": "All users, developers, IT administrators, students, and remote workers",
+      "questions": [
+        {
+          "title": "The Reused College Password",
+          "scenario": "A student uses the same password for college email, GitHub, and a gaming site. The gaming site announces a breach. Two hours later, someone tries logging into the student's GitHub.",
+          "options": [
+            "Only change the gaming site password",
+            "Change passwords on all reused accounts and enable MFA",
+            "Wait to see whether GitHub sends another alert",
+            "Delete the gaming account"
+          ],
+          "correctAnswer": "Change passwords on all reused accounts and enable MFA",
+          "explanation": "Credential stuffing tests breached passwords across services. Every account sharing the password is at risk, not just the breached site.",
+          "wrongOptionAnalysis": {
+            "Only change the gaming site password": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use unique passwords and MFA for important accounts.",
+            "Wait to see whether GitHub sends another alert": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use unique passwords and MFA for important accounts.",
+            "Delete the gaming account": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use unique passwords and MFA for important accounts."
+          },
+          "difficulty": 2,
+          "category": "Password & Authentication Security",
+          "lesson": "Understand password reuse and credential stuffing.",
+          "recommendedBehavior": "Use unique passwords and MFA for important accounts."
+        },
+        {
+          "title": "The MFA Push Storm",
+          "scenario": "At 11:48 PM, your phone receives seven MFA push notifications for your corporate account. One prompt says, 'Approve to stop alerts.' You did not try to sign in.",
+          "options": [
+            "Approve one prompt to stop the notifications",
+            "Deny the prompts, change your password through the official portal, and report it",
+            "Turn off notifications and sleep",
+            "Approve only if the location is your city"
+          ],
+          "correctAnswer": "Deny the prompts, change your password through the official portal, and report it",
+          "explanation": "This is likely MFA fatigue. Repeated prompts mean an attacker may know the password and is trying to get approval. Location can be proxied or inaccurate.",
+          "wrongOptionAnalysis": {
+            "Approve one prompt to stop the notifications": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Deny unexpected prompts, change credentials safely, revoke sessions where possible, and report.",
+            "Turn off notifications and sleep": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Deny unexpected prompts, change credentials safely, revoke sessions where possible, and report.",
+            "Approve only if the location is your city": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Deny unexpected prompts, change credentials safely, revoke sessions where possible, and report."
+          },
+          "difficulty": 5,
+          "category": "Password & Authentication Security",
+          "lesson": "Identify MFA fatigue attacks.",
+          "recommendedBehavior": "Deny unexpected prompts, change credentials safely, revoke sessions where possible, and report."
+        },
+        {
+          "title": "The Airport WiFi Login",
+          "scenario": "At an airport, you join 'Free_Airport_5G'. The captive portal asks you to log in using Google, Microsoft, or Apple. You need to approve a client document from your work account.",
+          "options": [
+            "Use Microsoft login because the portal offers it",
+            "Use a VPN and manually access work, or use a mobile hotspot",
+            "Enter credentials but change the password later",
+            "Use your personal Gmail because it is less important"
+          ],
+          "correctAnswer": "Use a VPN and manually access work, or use a mobile hotspot",
+          "explanation": "Fake captive portals can steal credentials. Personal accounts may also recover or access work services. Changing later may be too late.",
+          "wrongOptionAnalysis": {
+            "Use Microsoft login because the portal offers it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat public WiFi as untrusted and avoid identity-provider logins from captive portals.",
+            "Enter credentials but change the password later": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat public WiFi as untrusted and avoid identity-provider logins from captive portals.",
+            "Use your personal Gmail because it is less important": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat public WiFi as untrusted and avoid identity-provider logins from captive portals."
+          },
+          "difficulty": 4,
+          "category": "Password & Authentication Security",
+          "lesson": "Recognize public WiFi credential theft.",
+          "recommendedBehavior": "Treat public WiFi as untrusted and avoid identity-provider logins from captive portals."
+        },
+        {
+          "title": "The Shared Session Link",
+          "scenario": "A teammate sends a browser session export link so you can skip login into a test admin panel. The environment contains customer-like data. The URL includes a long token.",
+          "options": [
+            "Use the link because it is only test data",
+            "Ask for proper role-based access through SSO",
+            "Open it in private browsing mode",
+            "Shorten the link and save it for later"
+          ],
+          "correctAnswer": "Ask for proper role-based access through SSO",
+          "explanation": "Session tokens act like temporary credentials and can bypass authentication, MFA, and audit trails. Test systems often contain sensitive realistic data.",
+          "wrongOptionAnalysis": {
+            "Use the link because it is only test data": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use named, role-based access through approved authentication.",
+            "Open it in private browsing mode": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use named, role-based access through approved authentication.",
+            "Shorten the link and save it for later": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use named, role-based access through approved authentication."
+          },
+          "difficulty": 7,
+          "category": "Password & Authentication Security",
+          "lesson": "Understand session-token risk.",
+          "recommendedBehavior": "Use named, role-based access through approved authentication."
+        },
+        {
+          "title": "The Password Manager Recovery Trap",
+          "scenario": "An email says your password manager vault will be deleted unless you confirm recovery words. The sender is support@passw0rdmanager-security.com and includes your real name and company.",
+          "options": [
+            "Enter recovery words because losing the vault would be serious",
+            "Contact the password manager through the official app or website",
+            "Reply asking why deletion is happening",
+            "Enter only half the recovery phrase"
+          ],
+          "correctAnswer": "Contact the password manager through the official app or website",
+          "explanation": "Recovery words can grant full vault access. Personal details may come from breaches or public sources. Partial secrets can still help attackers.",
+          "wrongOptionAnalysis": {
+            "Enter recovery words because losing the vault would be serious": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never enter recovery phrases from links. Use the official app or website.",
+            "Reply asking why deletion is happening": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never enter recovery phrases from links. Use the official app or website.",
+            "Enter only half the recovery phrase": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never enter recovery phrases from links. Use the official app or website."
+          },
+          "difficulty": 8,
+          "category": "Password & Authentication Security",
+          "lesson": "Protect password manager recovery material.",
+          "recommendedBehavior": "Never enter recovery phrases from links. Use the official app or website."
+        }
+      ]
+    },
+    {
+      "section": "Malware & Device Safety",
+      "description": "Device compromise scenarios involving USB drops, cracked software, fake game mods, malicious APKs, risky browser extensions, ransomware behavior, and fake antivirus pressure.",
+      "difficultyLevel": "Beginner to Advanced",
+      "targetAudience": "Students, gamers, developers, office employees, and remote workers",
+      "questions": [
+        {
+          "title": "The Found USB Drive",
+          "scenario": "You find a USB drive labeled 'Q4 Bonus Plan' near the elevator. You are curious and your laptop is unlocked.",
+          "options": [
+            "Plug it in but do not open files",
+            "Give it to security or IT without plugging it in",
+            "Open it on a personal laptop instead",
+            "Ask colleagues if it belongs to them by passing it around"
+          ],
+          "correctAnswer": "Give it to security or IT without plugging it in",
+          "explanation": "USB devices can execute malware, emulate keyboards, or exploit drivers without opening files. Passing it around spreads the risk.",
+          "wrongOptionAnalysis": {
+            "Plug it in but do not open files": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect unknown removable media. Hand it to security or IT.",
+            "Open it on a personal laptop instead": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect unknown removable media. Hand it to security or IT.",
+            "Ask colleagues if it belongs to them by passing it around": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect unknown removable media. Hand it to security or IT."
+          },
+          "difficulty": 2,
+          "category": "Malware & Device Safety",
+          "lesson": "Recognize USB drop attacks.",
+          "recommendedBehavior": "Do not connect unknown removable media. Hand it to security or IT."
+        },
+        {
+          "title": "The Cracked Design Tool",
+          "scenario": "A teammate sends a torrent link for a cracked premium design tool needed for a college demo. The installer asks you to disable antivirus temporarily.",
+          "options": [
+            "Disable antivirus only during installation",
+            "Install it inside your main user account",
+            "Use legitimate software, trials, or approved alternatives",
+            "Install it and run a scan afterward"
+          ],
+          "correctAnswer": "Use legitimate software, trials, or approved alternatives",
+          "explanation": "Cracked software is a common malware channel. Disabling antivirus is exactly what malware needs. A later scan may miss stolen data or persistence.",
+          "wrongOptionAnalysis": {
+            "Disable antivirus only during installation": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use licensed, trial, open-source, or approved alternatives.",
+            "Install it inside your main user account": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use licensed, trial, open-source, or approved alternatives.",
+            "Install it and run a scan afterward": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use licensed, trial, open-source, or approved alternatives."
+          },
+          "difficulty": 3,
+          "category": "Malware & Device Safety",
+          "lesson": "Avoid trojanized cracked software.",
+          "recommendedBehavior": "Use licensed, trial, open-source, or approved alternatives."
+        },
+        {
+          "title": "The Game Mod APK",
+          "scenario": "A Telegram group shares 'CyberSim Pro Coins Unlimited.apk'. Android warns that the app wants SMS, accessibility, notification, and overlay permissions.",
+          "options": [
+            "Install it because many users downloaded it",
+            "Install it but deny permissions",
+            "Do not install it and report or remove the link",
+            "Install it on a spare phone with your main Google account"
+          ],
+          "correctAnswer": "Do not install it and report or remove the link",
+          "explanation": "Malicious APKs request excessive permissions to steal OTPs, overlay login screens, and control devices. Download-count claims can be fake.",
+          "wrongOptionAnalysis": {
+            "Install it because many users downloaded it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid unofficial APKs and report malicious links.",
+            "Install it but deny permissions": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid unofficial APKs and report malicious links.",
+            "Install it on a spare phone with your main Google account": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Avoid unofficial APKs and report malicious links."
+          },
+          "difficulty": 4,
+          "category": "Malware & Device Safety",
+          "lesson": "Detect risky sideloaded mobile apps.",
+          "recommendedBehavior": "Avoid unofficial APKs and report malicious links."
+        },
+        {
+          "title": "The Productivity Extension",
+          "scenario": "A browser extension called 'Meeting Notes AI' asks to read and change all data on all websites. It has polished branding and hundreds of five-star reviews. You are logged into email, CRM, and GitHub.",
+          "options": [
+            "Install it because reviews are positive",
+            "Install it only in a separate browser profile with no sensitive accounts",
+            "Check whether it is approved by IT and avoid broad-permission extensions",
+            "Install and remove it after the meeting"
+          ],
+          "correctAnswer": "Check whether it is approved by IT and avoid broad-permission extensions",
+          "explanation": "Extensions with broad permissions can steal cookies, tokens, page content, and credentials. Reviews can be fake or precede a malicious update.",
+          "wrongOptionAnalysis": {
+            "Install it because reviews are positive": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use only approved extensions with minimal permissions.",
+            "Install it only in a separate browser profile with no sensitive accounts": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use only approved extensions with minimal permissions.",
+            "Install and remove it after the meeting": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use only approved extensions with minimal permissions."
+          },
+          "difficulty": 7,
+          "category": "Malware & Device Safety",
+          "lesson": "Understand browser extension privilege risk.",
+          "recommendedBehavior": "Use only approved extensions with minimal permissions."
+        },
+        {
+          "title": "The Ransomware Warning Signs",
+          "scenario": "Your laptop fans spike. Files in a shared folder start renaming with .locked. A ransom note demands crypto. You still have Slack and email access.",
+          "options": [
+            "Disconnect from the network and notify IT/security from a separate trusted device",
+            "Keep the laptop online to let IT remote in",
+            "Pay the ransom quickly to stop encryption",
+            "Delete the ransom note and reboot"
+          ],
+          "correctAnswer": "Disconnect from the network and notify IT/security from a separate trusted device",
+          "explanation": "Fast containment reduces spread to network shares and other systems. Staying online can worsen damage. Rebooting or deleting notes can destroy evidence.",
+          "wrongOptionAnalysis": {
+            "Keep the laptop online to let IT remote in": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Isolate the device, preserve evidence, and report immediately.",
+            "Pay the ransom quickly to stop encryption": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Isolate the device, preserve evidence, and report immediately.",
+            "Delete the ransom note and reboot": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Isolate the device, preserve evidence, and report immediately."
+          },
+          "difficulty": 8,
+          "category": "Malware & Device Safety",
+          "lesson": "Prioritize ransomware containment.",
+          "recommendedBehavior": "Isolate the device, preserve evidence, and report immediately."
+        }
+      ]
+    },
+    {
+      "section": "AI & Deepfake Cyber Threats",
+      "description": "Advanced AI-enabled attacks using voice cloning, deepfake video calls, AI-generated spear phishing, fake support bots, manipulated screenshots, and cloned executive voices.",
+      "difficultyLevel": "Intermediate to Advanced",
+      "targetAudience": "Executives, finance teams, founders, SOC teams, security champions, and senior students",
+      "questions": [
+        {
+          "title": "The CFO Voice Note",
+          "scenario": "At 7:40 PM, a finance analyst receives a WhatsApp voice note that sounds exactly like the CFO: 'I am boarding a flight. Release the vendor advance now. Do not wait for email approval.'",
+          "options": [
+            "Approve because the voice is clearly the CFO",
+            "Verify through the official finance workflow and a known callback number",
+            "Ask the sender to send one more voice note",
+            "Process half the amount as a compromise"
+          ],
+          "correctAnswer": "Verify through the official finance workflow and a known callback number",
+          "explanation": "AI voice cloning can imitate executives. More voice notes do not prove identity, and partial payment is still fraud.",
+          "wrongOptionAnalysis": {
+            "Approve because the voice is clearly the CFO": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use process-based finance controls and trusted callback verification.",
+            "Ask the sender to send one more voice note": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use process-based finance controls and trusted callback verification.",
+            "Process half the amount as a compromise": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use process-based finance controls and trusted callback verification."
+          },
+          "difficulty": 8,
+          "category": "AI & Deepfake Cyber Threats",
+          "lesson": "Recognize AI voice payment scams.",
+          "recommendedBehavior": "Use process-based finance controls and trusted callback verification."
+        },
+        {
+          "title": "The Deepfake Video Standup",
+          "scenario": "A startup founder joins a late-night video call with a major investor. The video looks slightly delayed, and the investor asks for production dashboard access to validate traction before tomorrow's term sheet.",
+          "options": [
+            "Grant temporary admin access because funding is critical",
+            "Share a screenshot of the dashboard instead",
+            "Pause and verify using the investor's previously known email or phone number",
+            "Ask the person on video to confirm their LinkedIn profile"
+          ],
+          "correctAnswer": "Pause and verify using the investor's previously known email or phone number",
+          "explanation": "Deepfake calls exploit fundraising pressure. Temporary admin access and screenshots can still expose sensitive data. Public profile details are not proof.",
+          "wrongOptionAnalysis": {
+            "Grant temporary admin access because funding is critical": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify high-impact access requests through trusted out-of-band channels.",
+            "Share a screenshot of the dashboard instead": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify high-impact access requests through trusted out-of-band channels.",
+            "Ask the person on video to confirm their LinkedIn profile": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify high-impact access requests through trusted out-of-band channels."
+          },
+          "difficulty": 9,
+          "category": "AI & Deepfake Cyber Threats",
+          "lesson": "Handle deepfake executive and investor impersonation.",
+          "recommendedBehavior": "Verify high-impact access requests through trusted out-of-band channels."
+        },
+        {
+          "title": "The Perfectly Written Phish",
+          "scenario": "An email references yesterday's real product launch, names three colleagues, and asks you to review final launch incident notes. The link goes to docs-googleworkspace.com.",
+          "options": [
+            "Trust it because the context is accurate and grammar is perfect",
+            "Open the link but do not download anything",
+            "Check the domain and verify the document through official workspace channels",
+            "Forward it to the named colleagues"
+          ],
+          "correctAnswer": "Check the domain and verify the document through official workspace channels",
+          "explanation": "AI-generated phishing can be accurate and polished. The domain is suspicious. Opening may steal credentials even without downloads.",
+          "wrongOptionAnalysis": {
+            "Trust it because the context is accurate and grammar is perfect": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Inspect domains and verify shared documents inside official workspace tools.",
+            "Open the link but do not download anything": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Inspect domains and verify shared documents inside official workspace tools.",
+            "Forward it to the named colleagues": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Inspect domains and verify shared documents inside official workspace tools."
+          },
+          "difficulty": 6,
+          "category": "AI & Deepfake Cyber Threats",
+          "lesson": "Avoid trusting writing quality as a legitimacy signal.",
+          "recommendedBehavior": "Inspect domains and verify shared documents inside official workspace tools."
+        },
+        {
+          "title": "The Fake Support Bot",
+          "scenario": "A SaaS dashboard chat widget says: 'We detected API instability. Paste your API key here to validate affected services.' The bot uses your company name and logo.",
+          "options": [
+            "Paste the key because the widget is inside the SaaS app",
+            "Ask the bot for a ticket number and then paste it",
+            "Open a support ticket through the official portal without sharing secrets",
+            "Paste a read-only key if available"
+          ],
+          "correctAnswer": "Open a support ticket through the official portal without sharing secrets",
+          "explanation": "Support bots should never ask for secrets. A page, script, or fake portal may be compromised. Read-only keys can still expose data.",
+          "wrongOptionAnalysis": {
+            "Paste the key because the widget is inside the SaaS app": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never paste secrets into chat. Use official support and secret-redaction processes.",
+            "Ask the bot for a ticket number and then paste it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never paste secrets into chat. Use official support and secret-redaction processes.",
+            "Paste a read-only key if available": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never paste secrets into chat. Use official support and secret-redaction processes."
+          },
+          "difficulty": 8,
+          "category": "AI & Deepfake Cyber Threats",
+          "lesson": "Protect API keys from fake support workflows.",
+          "recommendedBehavior": "Never paste secrets into chat. Use official support and secret-redaction processes."
+        },
+        {
+          "title": "The Manipulated Screenshot",
+          "scenario": "A project lead sends a screenshot showing security approved disabling SSO for a demo tenant. The screenshot appears to come from Slack, but you cannot find the original message in Slack search.",
+          "options": [
+            "Proceed because screenshots are enough evidence",
+            "Ask the project lead to resend a clearer screenshot",
+            "Verify the approval in the original system or ask security directly",
+            "Disable SSO only for one hour"
+          ],
+          "correctAnswer": "Verify the approval in the original system or ask security directly",
+          "explanation": "Screenshots can be manipulated by AI or simple editing. A clearer fake is still fake. Even brief SSO removal can enable compromise.",
+          "wrongOptionAnalysis": {
+            "Proceed because screenshots are enough evidence": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat screenshots as context, not approval records.",
+            "Ask the project lead to resend a clearer screenshot": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat screenshots as context, not approval records.",
+            "Disable SSO only for one hour": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat screenshots as context, not approval records."
+          },
+          "difficulty": 7,
+          "category": "AI & Deepfake Cyber Threats",
+          "lesson": "Validate evidence in source-of-truth systems.",
+          "recommendedBehavior": "Treat screenshots as context, not approval records."
+        }
+      ]
+    },
+    {
+      "section": "Corporate Security Incidents",
+      "description": "Enterprise SOC-style incidents involving accidental data leaks, GitHub secret exposure, insider threats, cloud misconfigurations, exposed API keys, suspicious devices, and leaked Drive links.",
+      "difficultyLevel": "Intermediate to Advanced",
+      "targetAudience": "Developers, SOC analysts, cloud teams, managers, legal/HR partners, and security champions",
+      "questions": [
+        {
+          "title": "The GitHub Token Leak",
+          "scenario": "A developer accidentally commits an AWS access key to a public GitHub repository. The commit is deleted after 12 minutes. The key had access to staging S3 buckets.",
+          "options": [
+            "Do nothing because the commit was deleted quickly",
+            "Rotate or revoke the key, check logs, and notify security",
+            "Make the repository private and continue",
+            "Ask GitHub support to remove the cached commit only"
+          ],
+          "correctAnswer": "Rotate or revoke the key, check logs, and notify security",
+          "explanation": "Secrets can be harvested within seconds. Deleting commits or hiding the repo does not invalidate a secret or prove it was unused.",
+          "wrongOptionAnalysis": {
+            "Do nothing because the commit was deleted quickly": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Revoke exposed keys immediately, review logs, and escalate.",
+            "Make the repository private and continue": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Revoke exposed keys immediately, review logs, and escalate.",
+            "Ask GitHub support to remove the cached commit only": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Revoke exposed keys immediately, review logs, and escalate."
+          },
+          "difficulty": 8,
+          "category": "Corporate Security Incidents",
+          "lesson": "Respond to exposed credentials.",
+          "recommendedBehavior": "Revoke exposed keys immediately, review logs, and escalate."
+        },
+        {
+          "title": "The Public Drive Link",
+          "scenario": "Marketing shares a Google Drive folder as 'Anyone with the link can view' for an agency. It also contains unreleased pricing sheets and customer logos under NDA.",
+          "options": [
+            "Leave it because only people with the link can access it",
+            "Restrict sharing, review access logs if available, and notify the data owner/security",
+            "Rename the sensitive files",
+            "Ask the agency to promise not to share it"
+          ],
+          "correctAnswer": "Restrict sharing, review access logs if available, and notify the data owner/security",
+          "explanation": "Anyone-with-link access can spread beyond intended recipients. Renaming files or relying on promises does not control access.",
+          "wrongOptionAnalysis": {
+            "Leave it because only people with the link can access it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Restrict access, review exposure, and notify accountable owners.",
+            "Rename the sensitive files": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Restrict access, review exposure, and notify accountable owners.",
+            "Ask the agency to promise not to share it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Restrict access, review exposure, and notify accountable owners."
+          },
+          "difficulty": 5,
+          "category": "Corporate Security Incidents",
+          "lesson": "Recognize oversharing and least-privilege failures.",
+          "recommendedBehavior": "Restrict access, review exposure, and notify accountable owners."
+        },
+        {
+          "title": "The Cloud Storage Bucket",
+          "scenario": "A startup discovers its analytics bucket is publicly readable. It contains event logs with user emails, IP addresses, and device metadata. The founder says, 'It is not passwords, so it is fine.'",
+          "options": [
+            "Agree because no passwords are exposed",
+            "Make the bucket private, preserve evidence, assess exposure, and notify security/legal as required",
+            "Delete all logs immediately",
+            "Move the bucket to another region"
+          ],
+          "correctAnswer": "Make the bucket private, preserve evidence, assess exposure, and notify security/legal as required",
+          "explanation": "Emails, IPs, and device metadata can be sensitive personal data. Deleting logs destroys evidence. Region changes do not fix permissions.",
+          "wrongOptionAnalysis": {
+            "Agree because no passwords are exposed": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain public access, preserve evidence, and run incident assessment.",
+            "Delete all logs immediately": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain public access, preserve evidence, and run incident assessment.",
+            "Move the bucket to another region": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain public access, preserve evidence, and run incident assessment."
+          },
+          "difficulty": 7,
+          "category": "Corporate Security Incidents",
+          "lesson": "Assess cloud exposure beyond passwords.",
+          "recommendedBehavior": "Contain public access, preserve evidence, and run incident assessment."
+        },
+        {
+          "title": "The Insider Export",
+          "scenario": "A sales employee who recently resigned downloads the full customer list at midnight and emails a CSV to a personal account. Their manager says it was probably handover prep.",
+          "options": [
+            "Ignore it because the employee still works here",
+            "Disable access if policy allows, preserve logs, and escalate to security/HR/legal",
+            "Ask the employee directly in the team chat",
+            "Delete the email from mail logs"
+          ],
+          "correctAnswer": "Disable access if policy allows, preserve logs, and escalate to security/HR/legal",
+          "explanation": "Authorized users can misuse access. Direct confrontation can tip them off, and deleting logs destroys evidence.",
+          "wrongOptionAnalysis": {
+            "Ignore it because the employee still works here": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Preserve evidence and escalate through security, HR, and legal workflows.",
+            "Ask the employee directly in the team chat": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Preserve evidence and escalate through security, HR, and legal workflows.",
+            "Delete the email from mail logs": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Preserve evidence and escalate through security, HR, and legal workflows."
+          },
+          "difficulty": 9,
+          "category": "Corporate Security Incidents",
+          "lesson": "Handle insider-risk signals carefully.",
+          "recommendedBehavior": "Preserve evidence and escalate through security, HR, and legal workflows."
+        },
+        {
+          "title": "The Suspicious Office Charger",
+          "scenario": "A branded phone charger is left on a conference table after a vendor visit. A teammate wants to use it before a client call because their phone is dying.",
+          "options": [
+            "Use it because it is only a charger",
+            "Use a company-approved charger or power-only adapter and report the unknown device",
+            "Plug it into a laptop first to test it",
+            "Let the teammate use it since phones are sandboxed"
+          ],
+          "correctAnswer": "Use a company-approved charger or power-only adapter and report the unknown device",
+          "explanation": "Malicious charging devices can attempt data access or emulate USB devices. Testing on a laptop increases the risk.",
+          "wrongOptionAnalysis": {
+            "Use it because it is only a charger": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use approved charging hardware and report unknown electronics.",
+            "Plug it into a laptop first to test it": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use approved charging hardware and report unknown electronics.",
+            "Let the teammate use it since phones are sandboxed": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use approved charging hardware and report unknown electronics."
+          },
+          "difficulty": 6,
+          "category": "Corporate Security Incidents",
+          "lesson": "Recognize physical device threats.",
+          "recommendedBehavior": "Use approved charging hardware and report unknown electronics."
+        }
+      ]
+    },
+    {
+      "section": "Mobile & Social Media Security",
+      "description": "Gen-Z friendly mobile and social scenarios involving Instagram verification scams, WhatsApp takeover, Telegram investment groups, shortened URLs, fake giveaways, malicious APK links, and SIM swaps.",
+      "difficultyLevel": "Beginner to Advanced",
+      "targetAudience": "College students, creators, startup employees, community managers, and general employees",
+      "questions": [
+        {
+          "title": "The Instagram Blue Tick DM",
+          "scenario": "An account named 'Meta Verification Support' DMs a college creator: 'Your profile qualifies for verification. Complete the appeal form in 30 minutes.' The link asks for username, password, and backup codes.",
+          "options": [
+            "Enter details because verification is time-sensitive",
+            "Check verification only inside the official Instagram app settings",
+            "Send only the backup codes",
+            "Ask the account to prove it is Meta"
+          ],
+          "correctAnswer": "Check verification only inside the official Instagram app settings",
+          "explanation": "Platform verification happens through official app flows. Backup codes can bypass MFA. Attackers can fake proof and urgency.",
+          "wrongOptionAnalysis": {
+            "Enter details because verification is time-sensitive": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use official in-app security and verification settings.",
+            "Send only the backup codes": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use official in-app security and verification settings.",
+            "Ask the account to prove it is Meta": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Use official in-app security and verification settings."
+          },
+          "difficulty": 2,
+          "category": "Mobile & Social Media Security",
+          "lesson": "Recognize social media verification scams.",
+          "recommendedBehavior": "Use official in-app security and verification settings."
+        },
+        {
+          "title": "The WhatsApp Six-Digit Code",
+          "scenario": "A friend messages: 'I accidentally sent my WhatsApp code to your number. Please forward the six digits.' Seconds later, you receive an actual WhatsApp verification SMS.",
+          "options": [
+            "Forward it because it belongs to your friend",
+            "Do not share it and call your friend through another channel",
+            "Send only the last three digits",
+            "Post a screenshot with the code hidden"
+          ],
+          "correctAnswer": "Do not share it and call your friend through another channel",
+          "explanation": "The code controls your account, not your friend's. Partial codes and screenshots can still help attackers manipulate or recover accounts.",
+          "wrongOptionAnalysis": {
+            "Forward it because it belongs to your friend": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share verification codes. Verify unusual requests separately.",
+            "Send only the last three digits": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share verification codes. Verify unusual requests separately.",
+            "Post a screenshot with the code hidden": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Never share verification codes. Verify unusual requests separately."
+          },
+          "difficulty": 3,
+          "category": "Mobile & Social Media Security",
+          "lesson": "Prevent messaging account takeover.",
+          "recommendedBehavior": "Never share verification codes. Verify unusual requests separately."
+        },
+        {
+          "title": "The Telegram Investment Group",
+          "scenario": "A Telegram group claims CyberSim players can double prize winnings through a sponsor-backed crypto pool. Admins show payout screenshots and pressure users to connect wallets before the final round.",
+          "options": [
+            "Connect a wallet with a small balance",
+            "Ignore and report the group to event organizers",
+            "Ask other members if it worked",
+            "Connect using mobile data instead of WiFi"
+          ],
+          "correctAnswer": "Ignore and report the group to event organizers",
+          "explanation": "Fake investment groups use social proof, screenshots, urgency, and bots. Wallet drainers can steal funds or approvals regardless of network.",
+          "wrongOptionAnalysis": {
+            "Connect a wallet with a small balance": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect wallets from unsolicited group links. Report impersonation to organizers.",
+            "Ask other members if it worked": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect wallets from unsolicited group links. Report impersonation to organizers.",
+            "Connect using mobile data instead of WiFi": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Do not connect wallets from unsolicited group links. Report impersonation to organizers."
+          },
+          "difficulty": 5,
+          "category": "Mobile & Social Media Security",
+          "lesson": "Spot group-chat investment manipulation.",
+          "recommendedBehavior": "Do not connect wallets from unsolicited group links. Report impersonation to organizers."
+        },
+        {
+          "title": "The Shortened Giveaway Link",
+          "scenario": "A viral post says 'Free premium headphones for the first 500 students' and uses a shortened URL. The landing page asks for college email login to verify eligibility.",
+          "options": [
+            "Log in because student giveaways often need verification",
+            "Expand or check the URL and verify the campaign on the brand's official site",
+            "Use a weak password so it does not matter",
+            "Share it quickly before slots finish"
+          ],
+          "correctAnswer": "Expand or check the URL and verify the campaign on the brand's official site",
+          "explanation": "Shortened URLs hide destinations, and fake giveaways commonly harvest credentials. Sharing quickly spreads the scam.",
+          "wrongOptionAnalysis": {
+            "Log in because student giveaways often need verification": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify promotions through official brand channels before logging in.",
+            "Use a weak password so it does not matter": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify promotions through official brand channels before logging in.",
+            "Share it quickly before slots finish": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Verify promotions through official brand channels before logging in."
+          },
+          "difficulty": 3,
+          "category": "Mobile & Social Media Security",
+          "lesson": "Detect giveaway phishing.",
+          "recommendedBehavior": "Verify promotions through official brand channels before logging in."
+        },
+        {
+          "title": "The SIM Swap Warning",
+          "scenario": "Your phone suddenly loses signal. Minutes later, your email receives password reset alerts for banking and social accounts. Customer care says a duplicate SIM request was processed.",
+          "options": [
+            "Wait because network outages happen",
+            "Contact the carrier fraud team, secure accounts, and alert banks",
+            "Restart the phone repeatedly",
+            "Post on social media asking if others lost signal"
+          ],
+          "correctAnswer": "Contact the carrier fraud team, secure accounts, and alert banks",
+          "explanation": "Signal loss plus reset alerts strongly suggests SIM swap. Delays let attackers receive OTPs. Public posts can reveal you are distracted.",
+          "wrongOptionAnalysis": {
+            "Wait because network outages happen": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Escalate to carrier fraud support and secure critical accounts immediately.",
+            "Restart the phone repeatedly": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Escalate to carrier fraud support and secure critical accounts immediately.",
+            "Post on social media asking if others lost signal": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Escalate to carrier fraud support and secure critical accounts immediately."
+          },
+          "difficulty": 7,
+          "category": "Mobile & Social Media Security",
+          "lesson": "Recognize SIM swap attacks.",
+          "recommendedBehavior": "Escalate to carrier fraud support and secure critical accounts immediately."
+        }
+      ]
+    },
+    {
+      "section": "Live Incident Response Decisions",
+      "description": "Timed first-action drills asking what to do first, who to inform, what is safest, and which mistake would worsen the incident under pressure.",
+      "difficultyLevel": "Beginner to Advanced",
+      "targetAudience": "SOC analysts, incident responders, IT admins, managers, and live cyber drill participants",
+      "questions": [
+        {
+          "title": "The First Five Minutes",
+          "scenario": "A user reports they clicked a suspicious payroll link and entered their password. They are still logged in and using the laptop. The drill timer starts: what should you do first?",
+          "options": [
+            "Ask them to forward the phishing email to everyone as a warning",
+            "Change password through official SSO, revoke sessions if possible, and report to security",
+            "Tell them to delete browser history",
+            "Wait for SOC to confirm compromise"
+          ],
+          "correctAnswer": "Change password through official SSO, revoke sessions if possible, and report to security",
+          "explanation": "The password is already exposed. Forwarding spreads the link, deleting history removes evidence, and waiting gives attackers time.",
+          "wrongOptionAnalysis": {
+            "Ask them to forward the phishing email to everyone as a warning": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain the account, revoke sessions where possible, preserve evidence, and report.",
+            "Tell them to delete browser history": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain the account, revoke sessions where possible, preserve evidence, and report.",
+            "Wait for SOC to confirm compromise": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Contain the account, revoke sessions where possible, preserve evidence, and report."
+          },
+          "difficulty": 6,
+          "category": "Live Incident Response Decisions",
+          "lesson": "Prioritize credential-exposure response.",
+          "recommendedBehavior": "Contain the account, revoke sessions where possible, preserve evidence, and report."
+        },
+        {
+          "title": "The Suspicious Admin Login",
+          "scenario": "A SOC alert shows successful admin login from a foreign IP at 3:03 AM. The admin is asleep and cannot be reached. The account has cloud production privileges.",
+          "options": [
+            "Disable or suspend the account according to emergency procedure and escalate",
+            "Wait until morning to avoid disrupting work",
+            "Send an email to the admin account asking if it was them",
+            "Block only the foreign IP"
+          ],
+          "correctAnswer": "Disable or suspend the account according to emergency procedure and escalate",
+          "explanation": "High-privilege unexpected access requires urgent containment. The attacker may control the admin email, and IP blocking alone is weak.",
+          "wrongOptionAnalysis": {
+            "Wait until morning to avoid disrupting work": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Follow emergency containment procedures and escalate immediately.",
+            "Send an email to the admin account asking if it was them": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Follow emergency containment procedures and escalate immediately.",
+            "Block only the foreign IP": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Follow emergency containment procedures and escalate immediately."
+          },
+          "difficulty": 8,
+          "category": "Live Incident Response Decisions",
+          "lesson": "Respond to privileged-account compromise.",
+          "recommendedBehavior": "Follow emergency containment procedures and escalate immediately."
+        },
+        {
+          "title": "The Leaked Customer CSV",
+          "scenario": "A team lead accidentally posts a customer CSV in a public Slack channel with external guests. They delete it two minutes later. What is the biggest mistake to avoid?",
+          "options": [
+            "Assuming deletion means the incident is over",
+            "Notifying security",
+            "Restricting channel access",
+            "Preserving audit logs"
+          ],
+          "correctAnswer": "Assuming deletion means the incident is over",
+          "explanation": "Deleted messages may already have been viewed, downloaded, cached, or forwarded. The other actions support containment and investigation.",
+          "wrongOptionAnalysis": {
+            "Notifying security": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat deleted leaks as incidents requiring access review, evidence, and escalation.",
+            "Restricting channel access": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat deleted leaks as incidents requiring access review, evidence, and escalation.",
+            "Preserving audit logs": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Treat deleted leaks as incidents requiring access review, evidence, and escalation."
+          },
+          "difficulty": 5,
+          "category": "Live Incident Response Decisions",
+          "lesson": "Understand data-leak containment limits.",
+          "recommendedBehavior": "Treat deleted leaks as incidents requiring access review, evidence, and escalation."
+        },
+        {
+          "title": "The Malware Popup",
+          "scenario": "An employee sees a full-screen browser popup saying 'Your device is infected. Call Microsoft Support now.' It plays an alarm sound and blocks the close button.",
+          "options": [
+            "Call the number because it mentions Microsoft",
+            "Enter payment details to unlock support",
+            "Force close the browser if needed and report if anything was downloaded or entered",
+            "Click every button until it disappears"
+          ],
+          "correctAnswer": "Force close the browser if needed and report if anything was downloaded or entered",
+          "explanation": "Fake antivirus popups create panic to drive phone scams and remote access fraud. Calling, paying, or clicking blindly increases risk.",
+          "wrongOptionAnalysis": {
+            "Call the number because it mentions Microsoft": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Close the page safely and report any interaction or download.",
+            "Enter payment details to unlock support": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Close the page safely and report any interaction or download.",
+            "Click every button until it disappears": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Close the page safely and report any interaction or download."
+          },
+          "difficulty": 3,
+          "category": "Live Incident Response Decisions",
+          "lesson": "Respond safely to tech-support scams.",
+          "recommendedBehavior": "Close the page safely and report any interaction or download."
+        },
+        {
+          "title": "The Compromised Build Pipeline",
+          "scenario": "A DevOps engineer sees a CI job unexpectedly adding a deployment step that curls a script from pastebin-like storage. The job has production deploy permissions and is currently running.",
+          "options": [
+            "Let it finish and review logs afterward",
+            "Stop the job, preserve logs and artifacts, revoke exposed tokens if needed, and escalate",
+            "Delete the CI job logs to stop leakage",
+            "Comment on the pull request asking the author to explain"
+          ],
+          "correctAnswer": "Stop the job, preserve logs and artifacts, revoke exposed tokens if needed, and escalate",
+          "explanation": "Suspicious privileged automation can deploy backdoors or exfiltrate secrets quickly. Logs are evidence and should not be deleted.",
+          "wrongOptionAnalysis": {
+            "Let it finish and review logs afterward": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Stop suspicious privileged jobs, preserve evidence, rotate secrets as needed, and escalate.",
+            "Delete the CI job logs to stop leakage": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Stop suspicious privileged jobs, preserve evidence, rotate secrets as needed, and escalate.",
+            "Comment on the pull request asking the author to explain": "Dangerous because it bypasses verification, increases exposure, destroys useful evidence, or keeps the user inside the attacker's channel. Safer behavior: Stop suspicious privileged jobs, preserve evidence, rotate secrets as needed, and escalate."
+          },
+          "difficulty": 9,
+          "category": "Live Incident Response Decisions",
+          "lesson": "Contain CI/CD compromise under time pressure.",
+          "recommendedBehavior": "Stop suspicious privileged jobs, preserve evidence, rotate secrets as needed, and escalate."
+        }
+      ]
+    }
+  ],
+  "extraPremiumFeatures": {
+    "panicModeRounds": [
+      {
+        "title": "CEO Voice Payment Panic",
+        "timerSeconds": 20,
+        "prompt": "A cloned CEO voice orders an urgent wire transfer during a board meeting. What do you do first?",
+        "correctAction": "Pause payment and verify through approved finance controls and a known callback number."
+      },
+      {
+        "title": "Ransomware on Shared Drive",
+        "timerSeconds": 25,
+        "prompt": "Files are rapidly renaming on a shared drive. Your laptop is still online.",
+        "correctAction": "Disconnect from the network and alert security from a separate trusted device."
+      },
+      {
+        "title": "MFA Bomb at Midnight",
+        "timerSeconds": 15,
+        "prompt": "Your phone receives repeated MFA prompts you did not initiate.",
+        "correctAction": "Deny prompts, change password through the official portal, revoke sessions if possible, and report."
+      }
+    ],
+    "rapidFire15SecondQuestions": [
+      {
+        "prompt": "An email link says microsoft-login-security.com. Safe or suspicious?",
+        "answer": "Suspicious"
+      },
+      {
+        "prompt": "Should you share an OTP with your manager over WhatsApp?",
+        "answer": "No"
+      },
+      {
+        "prompt": "A cafeteria QR code asks for company SSO login. First action?",
+        "answer": "Do not log in; report and verify through official channels."
+      },
+      {
+        "prompt": "A GitHub secret was public for 5 minutes. Rotate it?",
+        "answer": "Yes, immediately"
+      },
+      {
+        "prompt": "Can a perfect grammar email still be phishing?",
+        "answer": "Yes"
+      }
+    ],
+    "leaderboardClutchMoments": [
+      {
+        "title": "Final Round: The Almost Legit Domain",
+        "scenario": "The only visible clue is vendorpay-secure.com instead of vendorpayment.com.",
+        "winningDecision": "Identify the lookalike domain and require out-of-band verification."
+      },
+      {
+        "title": "Final Round: Screenshot Approval",
+        "scenario": "A screenshot claims security approved disabling MFA.",
+        "winningDecision": "Reject screenshot-only approval and verify in the source system."
+      },
+      {
+        "title": "Final Round: The Helpful Admin",
+        "scenario": "A Discord admin privately sends a browser extension during the hackathon deadline.",
+        "winningDecision": "Verify in the official public channel before installing anything."
+      }
+    ],
+    "fakeAttackScreenshotDescriptions": [
+      {
+        "title": "Fake Microsoft Login",
+        "description": "A polished Microsoft-style login page with correct logo spacing, but the browser URL reads login.microsoft365-security-check.com and the certificate issuer is unrelated."
+      },
+      {
+        "title": "Fake HR Portal",
+        "description": "An HR payroll page showing employee ID and department, with a red banner saying salary revision expires in 18 minutes and a download button for Salary_Update.xlsm."
+      },
+      {
+        "title": "QR Phishing Poster",
+        "description": "Office poster near the coffee machine saying 'Mandatory WiFi Re-Auth' with a QR code, nonstandard company branding, and a footer typo: 'Infomation Security'."
+      }
+    ],
+    "cyberAwarenessFunFacts": [
+      "Attackers often harvest exposed API keys within minutes of public GitHub commits.",
+      "MFA fatigue attacks work because users are trained to approve prompts quickly without checking context.",
+      "QR phishing is effective because people inspect visible text less when scanning with phones.",
+      "Deepfake voice attacks are most dangerous when paired with urgency, authority, and secrecy.",
+      "Deleting a leaked file does not prove nobody accessed or copied it."
+    ],
+    "tieBreakerExpertQuestions": [
+      {
+        "title": "Token vs Password",
+        "question": "Why can a stolen browser session token be more dangerous than a stolen password?",
+        "answer": "A session token may bypass password and MFA checks because it represents an already authenticated session."
+      },
+      {
+        "title": "BEC Verification",
+        "question": "What is the safest way to verify a vendor bank account change?",
+        "answer": "Use a previously verified phone number or approved vendor-management process, not the email thread requesting the change."
+      },
+      {
+        "title": "Cloud Exposure",
+        "question": "Why should logs with emails and IP addresses be treated as sensitive?",
+        "answer": "They can identify users, reveal behavior, support targeting, and may qualify as personal data."
+      }
+    ],
+    "personaTargetedAttacks": {
+      "executiveVipTargeted": [
+        {
+          "title": "Board Pack Phish",
+          "scenario": "An executive receives a fake board pack link shortly before a board meeting, using accurate agenda details and a lookalike legal-firm domain.",
+          "lesson": "High-profile users require stronger verification for urgent confidential documents."
+        }
+      ],
+      "collegeStudentTargeted": [
+        {
+          "title": "Scholarship Verification Scam",
+          "scenario": "A fake scholarship portal asks students to upload ID documents and pay a refundable verification fee before midnight.",
+          "lesson": "Scholarship and internship scams often combine urgency, identity theft, and payment fraud."
+        }
+      ],
+      "startupEmployeeTargeted": [
+        {
+          "title": "Investor Diligence Portal",
+          "scenario": "A fake investor portal asks a founder to connect GitHub, Stripe, and production analytics for diligence validation.",
+          "lesson": "Fundraising pressure can be exploited to obtain sensitive integrations."
+        }
+      ]
+    }
+  }
+}

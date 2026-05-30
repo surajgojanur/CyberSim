@@ -1,12 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { openDatabase } from "../src/db.js";
-import { createParticipant } from "../src/participants.js";
+import { createParticipant, setParticipantConnected } from "../src/participants.js";
+import { createQuestionSet } from "../src/questionSets.js";
 import { createRoundTimerManager } from "../src/roundTimers.js";
 import {
   getAnswerProgress,
   getParticipantRevealPayload,
   getRevealPayload,
+  isRoundReadyToLock,
   lockRound,
   revealRound,
   startRound,
@@ -120,7 +122,9 @@ test("answer progress increments when answers are submitted", () => {
   const database = openDatabase(":memory:");
   const sessionId = createSession(database);
   const first = createParticipant(database, sessionId, "Analyst");
-  createParticipant(database, sessionId, "Operator");
+  const second = createParticipant(database, sessionId, "Operator");
+  setParticipantConnected(database, first.participant.id, true);
+  setParticipantConnected(database, second.participant.id, true);
   const { round } = startRound(database, sessionId, 45_000, 1_000);
 
   submitAnswer(
@@ -134,7 +138,11 @@ test("answer progress increments when answers are submitted", () => {
     2_000
   );
 
-  assert.deepEqual(getAnswerProgress(database, round.roundId), { answered: 1, total: 2 });
+  assert.deepEqual(getAnswerProgress(database, round.roundId), {
+    answered: 1,
+    total: 2,
+    allAnswered: false
+  });
 });
 
 test("timer manager locks a round when the timer expires", async () => {
@@ -153,7 +161,7 @@ test("timer manager locks a round when the timer expires", async () => {
   });
 
   assert.equal(locked.state, "locked");
-  assert.deepEqual(locked.progress, { answered: 0, total: 1 });
+  assert.deepEqual(locked.progress, { answered: 0, total: 0, allAnswered: false });
 });
 
 test("correct answers receive positive score and wrong or unanswered receive zero", () => {
@@ -289,4 +297,95 @@ test("explanation appears only in reveal payload", () => {
   assert.equal(Boolean(reveal.question.explanation), true);
   assert.equal(Boolean(participantReveal.question.explanation), true);
   assert.equal(getRevealPayload(database, round.roundId).correctAnswerId, reveal.correctAnswerId);
+});
+
+test("all-answered condition uses connected eligible participants", () => {
+  const database = openDatabase(":memory:");
+  const sessionId = createSession(database);
+  const first = createParticipant(database, sessionId, "Connected");
+  const second = createParticipant(database, sessionId, "Disconnected");
+  setParticipantConnected(database, first.participant.id, true);
+  setParticipantConnected(database, second.participant.id, false);
+  const { round } = startRound(database, sessionId, 45_000, 1_000);
+
+  submitAnswer(
+    database,
+    {
+      participantId: first.participant.id,
+      socketToken: first.participant.reconnectToken,
+      roundId: round.roundId,
+      answerOptionId: firstOptionId(round)
+    },
+    2_000
+  );
+
+  assert.deepEqual(getAnswerProgress(database, round.roundId), {
+    answered: 1,
+    total: 1,
+    allAnswered: true
+  });
+  assert.equal(isRoundReadyToLock(database, round.roundId), true);
+});
+
+test("early lock after all answered still requires reveal before next round", () => {
+  const database = openDatabase(":memory:");
+  const sessionId = createSession(database);
+  const { participant } = createParticipant(database, sessionId, "Analyst");
+  setParticipantConnected(database, participant.id, true);
+  const { round } = startRound(database, sessionId, 45_000, 1_000);
+
+  submitAnswer(
+    database,
+    {
+      participantId: participant.id,
+      socketToken: participant.reconnectToken,
+      roundId: round.roundId,
+      answerOptionId: correctOptionId(database, round.questionId)
+    },
+    2_000
+  );
+
+  assert.equal(isRoundReadyToLock(database, round.roundId), true);
+  const locked = lockRound(database, round.roundId, 2_500);
+  const blocked = startRound(database, sessionId, 45_000, 2_600);
+  const revealed = revealRound(database, round.roundId, 2_700);
+  const next = startRound(database, sessionId, 45_000, 2_800);
+
+  assert.equal(locked.error, null);
+  assert.equal(blocked.round, null);
+  assert.equal(blocked.error, "A round is already active");
+  assert.equal(revealed.reveal.state, "reveal");
+  assert.equal(next.error, null);
+  assert.equal(next.round.sequenceNumber, 2);
+});
+
+test("session uses selected custom question set", () => {
+  const database = openDatabase(":memory:");
+  const admin = database.prepare("SELECT id FROM admins WHERE username = ?").get("admin");
+  const customSet = createQuestionSet(database, admin.id, {
+    name: "Custom Set",
+    description: "",
+    questions: [
+      {
+        title: "Custom Phishing Drill",
+        scenario: "A custom scenario asks the participant to choose the safest action.",
+        options: ["Ignore it", "Report it", "Forward it", "Approve it"],
+        correctOptionIndex: 1,
+        explanation: "Reporting routes the message to security.",
+        learningObjective: "Practice reporting suspicious messages.",
+        recommendedBehavior: "Use the approved reporting channel.",
+        category: "Phishing",
+        difficulty: "Intro"
+      }
+    ]
+  });
+  const sessionId = database
+    .prepare("INSERT INTO sessions (admin_id, question_set_id, title, join_code) VALUES (?, ?, ?, ?)")
+    .run(admin.id, customSet.id, "Custom Round", "CUST01").lastInsertRowid;
+
+  const { round, error } = startRound(database, sessionId, 45_000, 1_000);
+
+  assert.equal(error, null);
+  assert.equal(round.question.title, "Custom Phishing Drill");
+  assert.equal(JSON.stringify(round).includes("correctAnswerId"), false);
 });

@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { join } from "node:path";
 import { authRouter } from "./auth.js";
+import { questionSetsRouter } from "./questionSets.js";
 import { sessionsRouter } from "./sessions.js";
 
 export function createApp({ clientOrigin, serveClient = false, staticDir = "" }) {
@@ -15,6 +16,7 @@ export function createApp({ clientOrigin, serveClient = false, staticDir = "" })
   });
 
   authRouter(app);
+  questionSetsRouter(app);
   sessionsRouter(app);
 
   if (serveClient) {

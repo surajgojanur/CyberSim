@@ -1,5 +1,5 @@
 import { getLeaderboard } from "./scoring.js";
-import { getActiveRoundForSession, lockRound, revealRound } from "./rounds.js";
+import { getActiveRoundForSession, getSessionQuestionSetId, lockRound, revealRound } from "./rounds.js";
 
 export function endSession(database, sessionId, nowMs = Date.now()) {
   const session = database
@@ -103,17 +103,27 @@ export function getRoundSummaries(database, sessionId) {
 }
 
 export function hasUnusedQuestions(database, sessionId) {
+  const session = database
+    .prepare("SELECT id, question_set_id AS questionSetId FROM sessions WHERE id = ?")
+    .get(sessionId);
+  const questionSetId = getSessionQuestionSetId(database, session);
+  if (!questionSetId) {
+    return false;
+  }
+
   const row = database
     .prepare(
       `SELECT q.id
        FROM questions q
+       JOIN question_set_questions qsq ON qsq.question_id = q.id
        WHERE q.id NOT IN (
          SELECT question_id FROM rounds WHERE session_id = ?
        )
-       ORDER BY q.id ASC
+       AND qsq.question_set_id = ?
+       ORDER BY qsq.display_order ASC, q.id ASC
        LIMIT 1`
     )
-    .get(sessionId);
+    .get(sessionId, questionSetId);
 
   return Boolean(row);
 }

@@ -3,6 +3,7 @@ import { dirname } from "node:path";
 import { mkdirSync } from "node:fs";
 import { config } from "./config.js";
 import { hashPassword } from "./passwords.js";
+import { premiumQuestionSet } from "./premiumQuestionSet.js";
 
 let db;
 
@@ -22,6 +23,8 @@ export function openDatabase(databasePath) {
   database.pragma("foreign_keys = ON");
   migrate(database);
   seedAdmin(database);
+  ensureDefaultQuestionSet(database);
+  ensurePremiumQuestionSet(database);
   return database;
 }
 
@@ -34,16 +37,29 @@ export function migrate(database) {
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS question_sets (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      admin_id INTEGER,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL DEFAULT '',
+      is_default INTEGER NOT NULL DEFAULT 0 CHECK (is_default IN (0, 1)),
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+    );
+
     CREATE TABLE IF NOT EXISTS sessions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       admin_id INTEGER NOT NULL,
+      question_set_id INTEGER,
       title TEXT NOT NULL,
       join_code TEXT NOT NULL UNIQUE,
       state TEXT NOT NULL DEFAULT 'lobby'
         CHECK (state IN ('lobby', 'question', 'locked', 'reveal', 'ended')),
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+      FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE,
+      FOREIGN KEY (question_set_id) REFERENCES question_sets(id) ON DELETE SET NULL
     );
 
     CREATE TABLE IF NOT EXISTS participants (
@@ -54,6 +70,7 @@ export function migrate(database) {
       connected INTEGER NOT NULL DEFAULT 0 CHECK (connected IN (0, 1)),
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       last_seen_at TEXT,
+      left_at TEXT,
       FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
     );
 
@@ -64,6 +81,9 @@ export function migrate(database) {
       explanation TEXT NOT NULL DEFAULT '',
       learning_objective TEXT NOT NULL DEFAULT '',
       recommended_behavior TEXT NOT NULL DEFAULT '',
+      category TEXT NOT NULL DEFAULT '',
+      difficulty TEXT NOT NULL DEFAULT '',
+      is_seed INTEGER NOT NULL DEFAULT 1 CHECK (is_seed IN (0, 1)),
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -73,6 +93,15 @@ export function migrate(database) {
       option_text TEXT NOT NULL,
       is_correct INTEGER NOT NULL DEFAULT 0 CHECK (is_correct IN (0, 1)),
       display_order INTEGER NOT NULL,
+      FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS question_set_questions (
+      question_set_id INTEGER NOT NULL,
+      question_id INTEGER NOT NULL,
+      display_order INTEGER NOT NULL,
+      PRIMARY KEY (question_set_id, question_id),
+      FOREIGN KEY (question_set_id) REFERENCES question_sets(id) ON DELETE CASCADE,
       FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
     );
 
@@ -122,6 +151,7 @@ export function migrate(database) {
     CREATE INDEX IF NOT EXISTS idx_sessions_join_code ON sessions(join_code);
     CREATE INDEX IF NOT EXISTS idx_participants_session ON participants(session_id);
     CREATE INDEX IF NOT EXISTS idx_answer_options_question ON answer_options(question_id);
+    CREATE INDEX IF NOT EXISTS idx_question_set_questions_set ON question_set_questions(question_set_id);
     CREATE INDEX IF NOT EXISTS idx_rounds_session ON rounds(session_id);
     CREATE INDEX IF NOT EXISTS idx_answers_round ON answers(round_id);
   `);
@@ -134,10 +164,15 @@ function migrateExistingPhase3(database) {
   addColumnIfMissing(database, "questions", "explanation", "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(database, "questions", "learning_objective", "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(database, "questions", "recommended_behavior", "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(database, "questions", "category", "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(database, "questions", "difficulty", "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(database, "questions", "is_seed", "INTEGER NOT NULL DEFAULT 1 CHECK (is_seed IN (0, 1))");
+  addColumnIfMissing(database, "sessions", "question_set_id", "INTEGER");
   addColumnIfMissing(database, "rounds", "revealed_at_ms", "INTEGER");
   addColumnIfMissing(database, "answers", "is_correct", "INTEGER CHECK (is_correct IN (0, 1))");
   addColumnIfMissing(database, "answers", "score", "INTEGER NOT NULL DEFAULT 0");
   addColumnIfMissing(database, "participants", "connected", "INTEGER NOT NULL DEFAULT 0 CHECK (connected IN (0, 1))");
+  addColumnIfMissing(database, "participants", "left_at", "TEXT");
 }
 
 function migrateRoundsRevealState(database) {
@@ -203,6 +238,121 @@ export function seedAdmin(database) {
   database
     .prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)")
     .run(config.seededAdminUsername, hashPassword(config.seededAdminPassword));
+}
+
+export function ensureDefaultQuestionSet(database) {
+  const admin = database
+    .prepare("SELECT id FROM admins WHERE username = ?")
+    .get(config.seededAdminUsername);
+  if (!admin) {
+    return;
+  }
+
+  const existing = database
+    .prepare("SELECT id FROM question_sets WHERE is_default = 1 ORDER BY id ASC LIMIT 1")
+    .get();
+
+  const questionSetId =
+    existing?.id ||
+    database
+      .prepare(
+        `INSERT INTO question_sets (admin_id, name, description, is_default)
+         VALUES (?, 'Starter Questions', 'Built-in CyberSim starter scenarios', 1)`
+      )
+      .run(admin.id).lastInsertRowid;
+
+  const linked = database
+    .prepare(
+      `SELECT COUNT(*) AS count
+       FROM question_set_questions
+       WHERE question_set_id = ?`
+    )
+    .get(questionSetId);
+
+  if (linked.count > 0) {
+    return;
+  }
+
+  const seedQuestions = database
+    .prepare("SELECT id FROM questions WHERE is_seed = 1 ORDER BY id ASC")
+    .all();
+  const insertLink = database.prepare(
+    `INSERT OR IGNORE INTO question_set_questions (question_set_id, question_id, display_order)
+     VALUES (?, ?, ?)`
+  );
+  const linkAll = database.transaction(() => {
+    seedQuestions.forEach((question, index) => {
+      insertLink.run(questionSetId, question.id, index + 1);
+    });
+  });
+  linkAll();
+}
+
+export function ensurePremiumQuestionSet(database) {
+  const admin = database
+    .prepare("SELECT id FROM admins WHERE username = ?")
+    .get(config.seededAdminUsername);
+  if (!admin) {
+    return;
+  }
+
+  const existing = database
+    .prepare("SELECT id FROM question_sets WHERE name = ? ORDER BY id ASC LIMIT 1")
+    .get(premiumQuestionSet.name);
+  if (existing) {
+    return;
+  }
+
+  const insertSet = database.prepare(
+    `INSERT INTO question_sets (admin_id, name, description)
+     VALUES (?, ?, ?)`
+  );
+  const insertQuestion = database.prepare(
+    `INSERT INTO questions (
+      title, scenario, explanation, learning_objective, recommended_behavior,
+      category, difficulty, is_seed
+     )
+     VALUES (?, ?, ?, ?, ?, ?, ?, 0)`
+  );
+  const insertOption = database.prepare(
+    `INSERT INTO answer_options (question_id, option_text, is_correct, display_order)
+     VALUES (?, ?, ?, ?)`
+  );
+  const insertLink = database.prepare(
+    `INSERT INTO question_set_questions (question_set_id, question_id, display_order)
+     VALUES (?, ?, ?)`
+  );
+
+  database.transaction(() => {
+    const questionSetId = insertSet
+      .run(admin.id, premiumQuestionSet.name, premiumQuestionSet.description)
+      .lastInsertRowid;
+
+    premiumQuestionSet.questions.forEach((question, questionIndex) => {
+      const questionId = insertQuestion
+        .run(
+          question.title,
+          question.scenario,
+          question.explanation,
+          question.learningObjective,
+          question.recommendedBehavior,
+          question.category,
+          question.difficulty
+        )
+        .lastInsertRowid;
+
+      question.options.forEach((option, optionIndex) => {
+        insertOption.run(
+          questionId,
+          option,
+          optionIndex === question.correctOptionIndex ? 1 : 0,
+          optionIndex + 1
+        );
+      });
+
+      insertLink.run(questionSetId, questionId, questionIndex + 1);
+    });
+  })();
 }
 
 export function seedQuestions(database) {
@@ -290,8 +440,10 @@ export function seedQuestions(database) {
   ];
 
   const insertQuestion = database.prepare(
-    `INSERT INTO questions (title, scenario, explanation, learning_objective, recommended_behavior)
-     VALUES (?, ?, ?, ?, ?)`
+    `INSERT INTO questions (
+      title, scenario, explanation, learning_objective, recommended_behavior, is_seed
+     )
+     VALUES (?, ?, ?, ?, ?, 1)`
   );
   const insertOption = database.prepare(
     `INSERT INTO answer_options (question_id, option_text, is_correct, display_order)

@@ -6,13 +6,15 @@ import {
   createParticipant,
   getParticipantByToken,
   listParticipants,
-  setParticipantConnected
+  setParticipantConnected,
+  setParticipantLeft
 } from "./participants.js";
 import { recoverActiveRounds } from "./recovery.js";
 import { endSession, hasUnusedQuestions } from "./results.js";
 import { createRoundTimerManager } from "./roundTimers.js";
 import {
   getActiveRoundForSession,
+  getAnswerProgress,
   getParticipantRevealPayload,
   lockRound,
   revealRound,
@@ -258,10 +260,7 @@ export function configureSocket(io) {
       timers.schedule(round);
       io.to(sessionRoom(round.sessionId)).emit("round_start", round);
       io.to(adminRoom(round.sessionId)).emit("round_start", round);
-      io.to(adminRoom(round.sessionId)).emit("answer_progress", {
-        answered: 0,
-        total: listParticipants(getDb(), round.sessionId).length
-      });
+      io.to(adminRoom(round.sessionId)).emit("answer_progress", getAnswerProgress(getDb(), round.roundId));
     });
 
     socket.on("submit_answer", (payload) => {
@@ -296,6 +295,26 @@ export function configureSocket(io) {
 
       socket.emit("answer_ack", answer);
       io.to(adminRoom(round.sessionId)).emit("answer_progress", progress);
+    });
+
+    socket.on("participant_leave_session", (payload) => {
+      const parsed = rejoinSchema.safeParse(payload);
+      if (!parsed.success) {
+        return socket.emit("socket_error", { message: parsed.error.issues[0].message });
+      }
+
+      const participant = getParticipantByToken(getDb(), parsed.data.socketToken);
+      if (!participant) {
+        return socket.emit("socket_error", { message: "Participant session is not valid" });
+      }
+
+      setParticipantLeft(getDb(), participant.id);
+      if (participantSockets.get(participant.id) === socket.id) {
+        participantSockets.delete(participant.id);
+      }
+      emitParticipantList(participant.sessionId);
+      socket.emit("participant_left_session");
+      socket.disconnect(true);
     });
 
     socket.on("admin_force_lock", (payload) => {
